@@ -116,7 +116,7 @@ result.
 
 ## Compatibility and expectations
 
-Elementor Cleanup requires **Elementor 4.1.\*** and **PHP 7.4 or PHP 8.x**.
+Elementor Cleanup requires **Elementor 4.x** and **PHP 7.4 or PHP 8.x**.
 
 Elementor changes frequently, including internal modules and admin markup. Test
 updates on a staging site before deploying them across client websites.

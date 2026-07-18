@@ -2,7 +2,7 @@
 
 /*
  * Plugin Name: Elementor Cleanup
- * Plugin URI: https://github.com/szepeviktor/wordpress-website-lifecycle
+ * Plugin URI: https://github.com/szepeviktor/elementor-cleanup
  * Description: Disables Elementor onboarding, promotional notices, tracking prompts, and related admin noise.
  * Requires Plugins: elementor
  * Elementor requires at least: 4.0.0
