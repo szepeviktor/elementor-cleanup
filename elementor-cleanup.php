@@ -6,7 +6,7 @@
  * Description: Disables Elementor onboarding, promotional notices, tracking prompts, and related admin noise.
  * Requires Plugins: elementor
  * Elementor requires at least: 4.0.0
- * Disabled Features: 38
+ * Disabled Features: 39
  */
 
 namespace {
@@ -830,7 +830,16 @@ namespace Elementor\Modules\Announcements {
 namespace Elementor\Modules\Checklist {
     class Module
     {
-        public const VISIBILITY_SWITCH_ID = 'show_launchpad_checklist';
+        private static $instance = null;
+
+        public static function instance()
+        {
+            if (null === self::$instance) {
+                self::$instance = new self();
+            }
+
+            return self::$instance;
+        }
 
         public static function get_experimental_data(): array
         {
@@ -841,8 +850,29 @@ namespace Elementor\Modules\Checklist {
         {
             return false;
         }
+    }
+}
 
-        public static function should_display_checklist_toggle_control(): bool
+namespace ElementorPro\Modules\Checklist {
+    class Module
+    {
+        private static $instance = null;
+
+        public static function instance()
+        {
+            if (null === self::$instance) {
+                self::$instance = new self();
+            }
+
+            return self::$instance;
+        }
+
+        public static function get_experimental_data(): array
+        {
+            return [];
+        }
+
+        public static function is_active(): bool
         {
             return false;
         }
