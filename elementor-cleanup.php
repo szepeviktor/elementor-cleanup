@@ -94,6 +94,14 @@ namespace {
                 'elementor/editor/v2/packages',
                 [$module, 'add_editor_packages']
             );
+
+            add_action(
+                'admin_menu',
+                static function (): void {
+                    remove_submenu_page('elementor-home', 'elementor-mcp');
+                },
+                PHP_INT_MAX
+            );
         },
         1
     );
@@ -364,8 +372,6 @@ namespace {
                     global $pagenow, $submenu, $_wp_real_parent_file;
 
                     $parent_slug = 'elementor-home';
-
-                    remove_submenu_page($parent_slug, 'elementor-mcp');
 
                     if (empty($submenu[$parent_slug])) {
                         return;
