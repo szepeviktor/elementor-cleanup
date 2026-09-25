@@ -55,6 +55,23 @@ Test the MU plugin with a real, built Elementor plugin in a browser.
 
 Use email address: webmaster@appfut.hu
 
+### Elementor Cleanup Item Audit
+
+When the user asks for an "Elementor Cleanup Item Audit", use the E2E
+environment with elevated WP-CLI and Chrome DevTools MCP:
+
+- run WP-CLI commands with elevated permissions because the normal sandbox can
+  hit bubblewrap limitations around the database socket, plugin files, and local
+  service state;
+- update the active Elementor plugin to the latest WordPress.org built release
+  before testing;
+- copy `elementor-cleanup.php` from this repository into the E2E install, or
+  confirm the E2E MU-plugin symlink points to this repository copy;
+- use Chrome DevTools MCP for browser navigation, snapshots, console messages,
+  and network inspection;
+- test each cleanup item by observing the behavior with the cleanup disabled and
+  enabled, then report only browser-observed differences as E2E evidence.
+
 Do not use the source checkout as the active WordPress plugin for E2E. This repository is the source tree and may not contain built assets. The local E2E WordPress install lives here:
 
     /home/viktor/chatgpt-is-super
