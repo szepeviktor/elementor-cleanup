@@ -195,23 +195,9 @@ namespace {
 
             unset(
                 $data['sidebar_promotion_variants'],
-                $data['site_builder']
+                $data['site_builder'],
+                $data['top_with_licences']
             );
-
-            if (isset($data['top_with_licences']) && is_array($data['top_with_licences'])) {
-                foreach ($data['top_with_licences'] as &$top_section) {
-                    if (! is_array($top_section)) {
-                        continue;
-                    }
-
-                    unset(
-                        $top_section['button_watch_title'],
-                        $top_section['button_watch_url'],
-                        $top_section['youtube_embed_id']
-                    );
-                }
-                unset($top_section);
-            }
 
             if (isset($data['get_started']) && is_array($data['get_started'])) {
                 foreach ($data['get_started'] as &$section) {
@@ -379,6 +365,8 @@ namespace {
 
                     $parent_slug = 'elementor-home';
 
+                    remove_submenu_page($parent_slug, 'elementor-mcp');
+
                     if (empty($submenu[$parent_slug])) {
                         return;
                     }
@@ -427,6 +415,10 @@ namespace {
 
                     foreach ($flyout['items'] as $item) {
                         if (! is_array($item) || empty($item['slug']) || empty($item['url'])) {
+                            continue;
+                        }
+
+                        if ('elementor-mcp' === $item['slug']) {
                             continue;
                         }
 
@@ -563,6 +555,7 @@ namespace {
                         '[data-test="whats-new-button"]',
                         'button[aria-label="Angie"]',
                         'a[href*="page=elementor-one-upgrade"]',
+                        'a[href*="page=elementor-mcp"]',
                         '.elementor-plugins-gopro',
                         '.elementor-element--promotion',
                         '.elementor-element--integration',
@@ -571,6 +564,16 @@ namespace {
                 . '{display:none!important;}'
                 . '.e-has-sidebar-navigation{--editor-one-sidebar-admin-top-bar-height:0px;}'
                 . '</style>';
+        },
+        PHP_INT_MAX
+    );
+
+    add_filter(
+        'elementor/editor-one/menu/position_mapping',
+        static function (array $mapping): array {
+            unset($mapping['elementor-mcp']);
+
+            return $mapping;
         },
         PHP_INT_MAX
     );
@@ -850,6 +853,11 @@ namespace Elementor\Modules\Checklist {
         {
             return false;
         }
+
+        public static function should_display_checklist_toggle_control(): bool
+        {
+            return false;
+        }
     }
 }
 
@@ -873,6 +881,11 @@ namespace ElementorPro\Modules\Checklist {
         }
 
         public static function is_active(): bool
+        {
+            return false;
+        }
+
+        public static function should_display_checklist_toggle_control(): bool
         {
             return false;
         }
